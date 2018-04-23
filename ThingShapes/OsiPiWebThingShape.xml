@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Entities
+ build="b190"
+ majorVersion="8"
+ minorVersion="2"
+ modelPersistenceProviderPackage="H2PersistenceProviderPackage"
+ revision="3"
+ schemaVersion="1020"
+ universal="">
+    <ThingShapes>
+        <ThingShape
+         className=""
+         description=""
+         documentationContent=""
+         homeMashup=""
+         lastModifiedDate="2018-04-20T17:25:33.696+03:00"
+         name="OsiPiWebThingShape"
+         projectName="OsiPiWebIntegration"
+         tags="">
+            <PropertyDefinitions>
+                <PropertyDefinition
+                 aspect.cacheTime="0.0"
+                 aspect.dataChangeType="VALUE"
+                 aspect.isLogged="false"
+                 aspect.isPersistent="true"
+                 aspect.isReadOnly="false"
+                 baseType="STRING"
+                 category=""
+                 description=""
+                 isLocalOnly="false"
+                 name="Path"
+                 ordinal="3"></PropertyDefinition>
+                <PropertyDefinition
+                 aspect.cacheTime="0.0"
+                 aspect.dataChangeType="VALUE"
+                 aspect.isLogged="false"
+                 aspect.isPersistent="true"
+                 aspect.isReadOnly="false"
+                 baseType="BOOLEAN"
+                 category=""
+                 description=""
+                 isLocalOnly="false"
+                 name="HasChildren"
+                 ordinal="5"></PropertyDefinition>
+                <PropertyDefinition
+                 aspect.cacheTime="0.0"
+                 aspect.dataChangeType="VALUE"
+                 aspect.isLogged="false"
+                 aspect.isPersistent="true"
+                 aspect.isReadOnly="false"
+                 aspect.thingTemplate="OsiPiWebConnectorThingTemplate"
+                 baseType="THINGNAME"
+                 category=""
+                 description=""
+                 isLocalOnly="false"
+                 name="connectorThing"
+                 ordinal="6"></PropertyDefinition>
+                <PropertyDefinition
+                 aspect.cacheTime="0.0"
+                 aspect.dataChangeType="VALUE"
+                 aspect.isLogged="false"
+                 aspect.isPersistent="true"
+                 aspect.isReadOnly="false"
+                 baseType="STRING"
+                 category=""
+                 description=""
+                 isLocalOnly="false"
+                 name="WebId"
+                 ordinal="1"></PropertyDefinition>
+                <PropertyDefinition
+                 aspect.cacheTime="0.0"
+                 aspect.dataChangeType="VALUE"
+                 aspect.isLogged="false"
+                 aspect.isPersistent="true"
+                 aspect.isReadOnly="false"
+                 baseType="STRING"
+                 category=""
+                 description=""
+                 isLocalOnly="false"
+                 name="TemplateName"
+                 ordinal="4"></PropertyDefinition>
+                <PropertyDefinition
+                 aspect.cacheTime="0.0"
+                 aspect.dataChangeType="VALUE"
+                 aspect.isLogged="false"
+                 aspect.isPersistent="true"
+                 aspect.isReadOnly="false"
+                 baseType="STRING"
+                 category=""
+                 description=""
+                 isLocalOnly="false"
+                 name="Id"
+                 ordinal="2"></PropertyDefinition>
+            </PropertyDefinitions>
+            <ServiceDefinitions>
+                <ServiceDefinition
+                 aspect.isAsync="false"
+                 category=""
+                 description=""
+                 isAllowOverride="false"
+                 isLocalOnly="false"
+                 isOpen="false"
+                 isPrivate="false"
+                 name="UpdatedOsiWebProperties">
+                    <ResultType
+                     baseType="INFOTABLE"
+                     description=""
+                     name="result"
+                     ordinal="0"></ResultType>
+                    <ParameterDefinitions></ParameterDefinitions>
+                </ServiceDefinition>
+            </ServiceDefinitions>
+            <EventDefinitions></EventDefinitions>
+            <ServiceMappings></ServiceMappings>
+            <ServiceImplementations>
+                <ServiceImplementation
+                 description=""
+                 handlerName="Script"
+                 name="UpdatedOsiWebProperties">
+                    <ConfigurationTables>
+                        <ConfigurationTable
+                         description="Script"
+                         isMultiRow="false"
+                         name="Script"
+                         ordinal="0">
+                            <DataShape>
+                                <FieldDefinitions>
+                                    <FieldDefinition
+                                     baseType="STRING"
+                                     description="code"
+                                     name="code"
+                                     ordinal="0"></FieldDefinition>
+                                </FieldDefinitions>
+                            </DataShape>
+                            <Rows>
+                                <Row>
+                                    <code>
+                                    <![CDATA[
+                                    "use strict";
+                                    // make a map of property webId and property names
+                                    var propertyDefinitions = me.GetPropertyDefinitions({ category: "GeneratedAttrs" });
+                                    // a map from 
+                                    var propertyNameMap = {};
+                                    var propertyMessageRegex = /WebId: (.*?);/;
+                                    for (var _i = 0, _a = propertyDefinitions.rows; _i < _a.length; _i++) {
+                                        var propertyDef = _a[_i];
+                                        // look at the description and see if it matches a osi pi web id generated property
+                                        var propertyDescMatch = propertyDef.description.match(propertyMessageRegex);
+                                        if (!propertyDescMatch || propertyDescMatch.length == 0) {
+                                            // does not match the description format, so move on
+                                            continue;
+                                        }
+                                        propertyNameMap[propertyDescMatch[1]] = {
+                                            name: propertyDef.name,
+                                            baseType: propertyDef.baseType
+                                        };
+                                    }
+                                    var connectorThing = Things[me.connectorThing];
+                                    // now, look at the web id of the element and get the elements
+                                    var topElements = connectorThing.GetElements({ webId: me.WebId });
+                                    var updatedPropertyRequest = DataShapes["NamedVTQL"].CreateValues();
+                                    for (var _b = 0, _c = topElements.Items; _b < _c.length; _b++) {
+                                        var element = _c[_b];
+                                        // get all the values for all the attributes
+                                        var propValues = connectorThing.GetValue({ webId: element.WebId, objType: "streamsets" });
+                                        for (var _d = 0, _e = propValues.Items; _d < _e.length; _d++) {
+                                            var propValue = _e[_d];
+                                            // skip if it;s not in our map
+                                            if (!propertyNameMap[propValue["WebId"]]) {
+                                                continue;
+                                            }
+                                            var rawPropValue = void 0;
+                                            if (propertyNameMap[propValue["WebId"]].baseType == "STRING") {
+                                                rawPropValue = propValue.Value.Value.Name;
+                                            }
+                                            else if (propertyNameMap[propValue["WebId"]].baseType == "NUMBER") {
+                                                if (typeof (propValue.Value.Value) == "number") {
+                                                    rawPropValue = propValue.Value.Value;
+                                                }
+                                                else {
+                                                    rawPropValue = propValue.Value.Value.Value;
+                                                }
+                                            }
+                                            var quality = propValue.Value.Good ? "GOOD" : "BAD";
+                                            updatedPropertyRequest.AddRow({
+                                                name: propertyNameMap[propValue["WebId"]].name,
+                                                value: rawPropValue,
+                                                time: propValue.Value.Timestamp
+                                            });
+                                        }
+                                    }
+                                    me.UpdatePropertyValues({
+                                        values: updatedPropertyRequest
+                                    });
+                                    var result = updatedPropertyRequest;
+                                    ]]>
+                                    </code>
+                                </Row>
+                                <Row>
+                                    <code>
+                                    <![CDATA[
+                                    // make a map of property webId and property names
+                                    let propertyDefinitions = me.GetPropertyDefinitions({ category: "GeneratedAttrs" });
+                                    // a map from 
+                                    let propertyNameMap: {
+                                        [s: string]: {
+                                            name: string,
+                                            baseType: string
+                                        }
+                                    } = {};
+                                    
+                                    const propertyMessageRegex = /WebId: (.*?);/;
+                                    
+                                    for (let propertyDef of propertyDefinitions.rows) {
+                                        // look at the description and see if it matches a osi pi web id generated property
+                                        let propertyDescMatch = propertyDef.description.match(propertyMessageRegex);
+                                        if (!propertyDescMatch || propertyDescMatch.length == 0) {
+                                            // does not match the description format, so move on
+                                            continue;
+                                        }
+                                        propertyNameMap[propertyDescMatch[1]] = {
+                                            name: propertyDef.name,
+                                            baseType: propertyDef.baseType
+                                        }
+                                    }
+                                    
+                                    
+                                    let connectorThing = Things[me.connectorThing];
+                                    
+                                    // now, look at the web id of the element and get the elements
+                                    let topElements = connectorThing.GetElements({ webId: me.WebId });
+                                    
+                                    let updatedPropertyRequest = DataShapes["NamedVTQL"].CreateValues();
+                                    for (let element of topElements.Items) {
+                                        // get all the values for all the attributes
+                                        let propValues = connectorThing.GetValue({ webId: element.WebId, objType: "streamsets" });
+                                        for (let propValue of propValues.Items) {
+                                            // skip if it;s not in our map
+                                            if (!propertyNameMap[propValue["WebId"]]) {
+                                                continue;
+                                            }
+                                            let rawPropValue;
+                                            if (propertyNameMap[propValue["WebId"]].baseType == "STRING") {
+                                                rawPropValue = propValue.Value.Value.Name;
+                                            } else if (propertyNameMap[propValue["WebId"]].baseType == "NUMBER") {
+                                                if(typeof(propValue.Value.Value)=="number") {
+                                                    rawPropValue = propValue.Value.Value;
+                                                } else {
+                                                    rawPropValue = propValue.Value.Value.Value;
+                                                }
+                                            }
+                                            let quality = propValue.Value.Good ? "GOOD" : "BAD";
+                                            updatedPropertyRequest.AddRow({
+                                                name: propertyNameMap[propValue["WebId"]].name,
+                                                value: rawPropValue,
+                                                time: propValue.Value.Timestamp
+                                            })
+                                        }
+                                    }
+                                    
+                                    me.UpdatePropertyValues({
+                                        values: updatedPropertyRequest
+                                    })
+                                    var result = updatedPropertyRequest;
+                                    ]]>
+                                    </code>
+                                </Row>
+                            </Rows>
+                        </ConfigurationTable>
+                    </ConfigurationTables>
+                </ServiceImplementation>
+            </ServiceImplementations>
+            <Subscriptions></Subscriptions>
+            <avatar></avatar>
+            <DesignTimePermissions>
+                <Create></Create>
+                <Read></Read>
+                <Update></Update>
+                <Delete></Delete>
+                <Metadata></Metadata>
+            </DesignTimePermissions>
+            <RunTimePermissions></RunTimePermissions>
+            <VisibilityPermissions>
+                <Visibility></Visibility>
+            </VisibilityPermissions>
+            <ConfigurationTables></ConfigurationTables>
+            <PropertyBindings></PropertyBindings>
+            <RemotePropertyBindings></RemotePropertyBindings>
+            <RemoteServiceBindings></RemoteServiceBindings>
+            <RemoteEventBindings></RemoteEventBindings>
+            <AlertConfigurations>
+                <AlertDefinitions
+                 name="connectorThing"></AlertDefinitions>
+                <AlertDefinitions
+                 name="HasChildren"></AlertDefinitions>
+                <AlertDefinitions
+                 name="Id"></AlertDefinitions>
+                <AlertDefinitions
+                 name="Path"></AlertDefinitions>
+                <AlertDefinitions
+                 name="TemplateName"></AlertDefinitions>
+                <AlertDefinitions
+                 name="WebId"></AlertDefinitions>
+            </AlertConfigurations>
+            <InstanceRunTimePermissions></InstanceRunTimePermissions>
+        </ThingShape>
+    </ThingShapes>
+</Entities>

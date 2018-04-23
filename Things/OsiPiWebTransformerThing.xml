@@ -1,0 +1,854 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Entities
+ build="b190"
+ majorVersion="8"
+ minorVersion="2"
+ modelPersistenceProviderPackage="H2PersistenceProviderPackage"
+ revision="3"
+ schemaVersion="1020"
+ universal="">
+    <Things>
+        <Thing
+         description=""
+         documentationContent=""
+         effectiveThingPackage="ConfiguredThing"
+         enabled="true"
+         homeMashup=""
+         identifier=""
+         lastModifiedDate="2018-04-20T17:37:39.695+03:00"
+         name="OsiPiWebTransformerThing"
+         projectName="OsiPiWebIntegration"
+         published="false"
+         tags=""
+         thingTemplate="GenericThing"
+         valueStream="">
+            <avatar></avatar>
+            <DesignTimePermissions>
+                <Create></Create>
+                <Read></Read>
+                <Update></Update>
+                <Delete></Delete>
+                <Metadata></Metadata>
+            </DesignTimePermissions>
+            <RunTimePermissions></RunTimePermissions>
+            <VisibilityPermissions>
+                <Visibility></Visibility>
+            </VisibilityPermissions>
+            <ConfigurationTables></ConfigurationTables>
+            <ThingShape>
+                <PropertyDefinitions></PropertyDefinitions>
+                <ServiceDefinitions>
+                    <ServiceDefinition
+                     aspect.isAsync="false"
+                     category=""
+                     description=""
+                     isAllowOverride="false"
+                     isLocalOnly="false"
+                     isOpen="false"
+                     isPrivate="false"
+                     name="CreateModelFromPiWeb">
+                        <ResultType
+                         aspect.dataShape="GenericElementDataShape"
+                         baseType="INFOTABLE"
+                         description=""
+                         name="result"
+                         ordinal="0"></ResultType>
+                        <ParameterDefinitions>
+                            <FieldDefinition
+                             aspect.thingTemplate="OsiPiWebConnectorThingTemplate"
+                             baseType="THINGNAME"
+                             description=""
+                             name="connectorThingName"
+                             ordinal="2"></FieldDefinition>
+                            <FieldDefinition
+                             baseType="STRING"
+                             description=""
+                             name="elementWebId"
+                             ordinal="1"></FieldDefinition>
+                        </ParameterDefinitions>
+                    </ServiceDefinition>
+                    <ServiceDefinition
+                     aspect.isAsync="false"
+                     category=""
+                     description=""
+                     isAllowOverride="false"
+                     isLocalOnly="false"
+                     isOpen="false"
+                     isPrivate="false"
+                     name="CreateThingModelFromElementsFlat">
+                        <ResultType
+                         baseType="NOTHING"
+                         description=""
+                         name="result"
+                         ordinal="0"></ResultType>
+                        <ParameterDefinitions>
+                            <FieldDefinition
+                             aspect.dataShape="GenericElementDataShape"
+                             baseType="INFOTABLE"
+                             description=""
+                             name="dataModel"
+                             ordinal="2"></FieldDefinition>
+                            <FieldDefinition
+                             baseType="STRING"
+                             description=""
+                             name="network"
+                             ordinal="5"></FieldDefinition>
+                            <FieldDefinition
+                             baseType="STRING"
+                             description=""
+                             name="prefix"
+                             ordinal="3"></FieldDefinition>
+                            <FieldDefinition
+                             aspect.tagType="ModelTags"
+                             baseType="TAGS"
+                             description=""
+                             name="tags"
+                             ordinal="4"></FieldDefinition>
+                            <FieldDefinition
+                             baseType="THINGTEMPLATENAME"
+                             description=""
+                             name="template"
+                             ordinal="1"></FieldDefinition>
+                        </ParameterDefinitions>
+                    </ServiceDefinition>
+                    <ServiceDefinition
+                     aspect.isAsync="false"
+                     category=""
+                     description=""
+                     isAllowOverride="false"
+                     isLocalOnly="false"
+                     isOpen="false"
+                     isPrivate="false"
+                     name="CreateThingModelFromElementsNested">
+                        <ResultType
+                         baseType="NOTHING"
+                         description=""
+                         name="result"
+                         ordinal="0"></ResultType>
+                        <ParameterDefinitions>
+                            <FieldDefinition
+                             aspect.dataShape="GenericElementDataShape"
+                             baseType="INFOTABLE"
+                             description=""
+                             name="dataModel"
+                             ordinal="2"></FieldDefinition>
+                            <FieldDefinition
+                             baseType="STRING"
+                             description=""
+                             name="network"
+                             ordinal="5"></FieldDefinition>
+                            <FieldDefinition
+                             baseType="STRING"
+                             description=""
+                             name="prefix"
+                             ordinal="3"></FieldDefinition>
+                            <FieldDefinition
+                             aspect.tagType="ModelTags"
+                             baseType="TAGS"
+                             description=""
+                             name="tags"
+                             ordinal="4"></FieldDefinition>
+                            <FieldDefinition
+                             baseType="THINGTEMPLATENAME"
+                             description=""
+                             name="template"
+                             ordinal="1"></FieldDefinition>
+                        </ParameterDefinitions>
+                    </ServiceDefinition>
+                    <ServiceDefinition
+                     aspect.isAsync="false"
+                     category=""
+                     description=""
+                     isAllowOverride="false"
+                     isLocalOnly="false"
+                     isOpen="false"
+                     isPrivate="false"
+                     name="CreateThingModelFromElementWebId">
+                        <ResultType
+                         baseType="NOTHING"
+                         description=""
+                         name="result"
+                         ordinal="0"></ResultType>
+                        <ParameterDefinitions>
+                            <FieldDefinition
+                             aspect.thingTemplate="OsiPiWebConnectorThingTemplate"
+                             baseType="THINGNAME"
+                             description=""
+                             name="connectorThingName"
+                             ordinal="6"></FieldDefinition>
+                            <FieldDefinition
+                             aspect.dataShape="GenericElementDataShape"
+                             baseType="STRING"
+                             description=""
+                             name="elementWebId"
+                             ordinal="2"></FieldDefinition>
+                            <FieldDefinition
+                             baseType="STRING"
+                             description=""
+                             name="network"
+                             ordinal="5"></FieldDefinition>
+                            <FieldDefinition
+                             baseType="STRING"
+                             description=""
+                             name="prefix"
+                             ordinal="3"></FieldDefinition>
+                            <FieldDefinition
+                             aspect.tagType="ModelTags"
+                             baseType="TAGS"
+                             description=""
+                             name="tags"
+                             ordinal="4"></FieldDefinition>
+                            <FieldDefinition
+                             baseType="THINGTEMPLATENAME"
+                             description=""
+                             name="template"
+                             ordinal="1"></FieldDefinition>
+                        </ParameterDefinitions>
+                    </ServiceDefinition>
+                </ServiceDefinitions>
+                <EventDefinitions></EventDefinitions>
+                <ServiceMappings></ServiceMappings>
+                <ServiceImplementations>
+                    <ServiceImplementation
+                     description=""
+                     handlerName="Script"
+                     name="CreateModelFromPiWeb">
+                        <ConfigurationTables>
+                            <ConfigurationTable
+                             description="Script"
+                             isMultiRow="false"
+                             name="Script"
+                             ordinal="0">
+                                <DataShape>
+                                    <FieldDefinitions>
+                                        <FieldDefinition
+                                         baseType="STRING"
+                                         description="code"
+                                         name="code"
+                                         ordinal="0"></FieldDefinition>
+                                    </FieldDefinitions>
+                                </DataShape>
+                                <Rows>
+                                    <Row>
+                                        <code>
+                                        <![CDATA[
+                                        "use strict";
+                                        var loggerPrefix = me.name + "::CreateModelFromPiWeb:: ";
+                                        var connectorThing = Things[connectorThingName];
+                                        var result = getElements(elementWebId);
+                                        function getElements(webId) {
+                                            logger.info(loggerPrefix + (" Getting elements for " + webId));
+                                            var elements = connectorThing.GetElements({ webId: webId });
+                                            return parseElements(elements.Items);
+                                        }
+                                        function getAttributes(webId) {
+                                            logger.info(loggerPrefix + (" Getting Attributes for " + webId));
+                                            var elements = connectorThing.GetAttributes({ webId: webId, objType: "elements" });
+                                            return parseAttributes(elements.Items);
+                                        }
+                                        function parseAttributes(attributes) {
+                                            var attrsInfotable = DataShapes.GenericAttributeDataShape.CreateValues();
+                                            for (var _i = 0, attributes_1 = attributes; _i < attributes_1.length; _i++) {
+                                                var attr = attributes_1[_i];
+                                                // try to find the tagId for this attr
+                                                var atrributeAttributes = connectorThing.GetAttributes({ webId: attr.WebId, objType: "attributes" });
+                                                var attrTagId = "";
+                                                // find the attribute that has the name tagId
+                                                for (var _a = 0, _b = atrributeAttributes.Items; _a < _b.length; _a++) {
+                                                    var attrAttr = _b[_a];
+                                                    if (attrAttr.Name == "TagId") {
+                                                        // now get the tagId 
+                                                        attrTagId = connectorThing.GetValue({ webId: attrAttr.WebId, objType: "attributes" }).Value;
+                                                    }
+                                                }
+                                                attr.TagId = attrTagId;
+                                                attrsInfotable.AddRow(attr);
+                                            }
+                                            return attrsInfotable;
+                                        }
+                                        function parseElements(parentElements) {
+                                            var elementsInfoTable = DataShapes["GenericElementDataShape"].CreateValues();
+                                            // iterate through the parentElements and take care of each one
+                                            for (var _i = 0, parentElements_1 = parentElements; _i < parentElements_1.length; _i++) {
+                                                var element = parentElements_1[_i];
+                                                var row = parseElement(element);
+                                                elementsInfoTable.AddRow(row);
+                                            }
+                                            return elementsInfoTable;
+                                        }
+                                        function parseElement(element) {
+                                            return {
+                                                WebId: element.WebId,
+                                                Id: element.Id,
+                                                Name: element.Name,
+                                                Description: element.Description,
+                                                Path: element.Path,
+                                                TemplateName: element.TemplateName,
+                                                HasChildren: element.HasChildren,
+                                                Attributes: getAttributes(element.WebId),
+                                                Subcomponents: getElements(element.WebId)
+                                            };
+                                        }
+                                        ]]>
+                                        </code>
+                                    </Row>
+                                    <Row>
+                                        <code>
+                                        <![CDATA[
+                                        const loggerPrefix = me.name + "::CreateModelFromPiWeb:: ";
+                                        
+                                        let connectorThing = Things[connectorThingName]; 
+                                        
+                                        let result = getElements(elementWebId);
+                                        
+                                        function getElements(webId): twx.ds.GenericElementDataShape {
+                                            logger.info(loggerPrefix + ` Getting elements for ${webId}` );
+                                            let elements = connectorThing.GetElements({ webId: webId });
+                                        
+                                            return parseElements(elements.Items);
+                                        }
+                                        
+                                        function getAttributes(webId): twx.ds.GenericElementDataShape {
+                                            logger.info(loggerPrefix + ` Getting Attributes for ${webId}`);
+                                        
+                                            let elements = connectorThing.GetAttributes({ webId: webId, objType: "elements" });
+                                        
+                                            return parseAttributes(elements.Items);
+                                        }
+                                        
+                                        function parseAttributes(attributes): twx.INFOTABLE<twx.ds.GenericAttributeDataShape> {
+                                            let attrsInfotable = DataShapes.GenericAttributeDataShape.CreateValues();
+                                            for (let attr of attributes) {
+                                                // try to find the tagId for this attr
+                                                let atrributeAttributes = connectorThing.GetAttributes({ webId: attr.WebId, objType: "attributes"});
+                                                let attrTagId = "";
+                                                // find the attribute that has the name tagId
+                                                for (let attrAttr of atrributeAttributes.Items) {
+                                                    if(attrAttr.Name == "TagId") {
+                                                        // now get the tagId 
+                                                        attrTagId = connectorThing.GetValue({webId: attrAttr.WebId, objType: "attributes"}).Value;
+                                                    }
+                                                }
+                                                attr.TagId = attrTagId;
+                                                attrsInfotable.AddRow(attr)
+                                            }
+                                            return attrsInfotable;
+                                        }
+                                        
+                                        function parseElements(parentElements): twx.INFOTABLE<twx.ds.GenericElementDataShape> {
+                                            let elementsInfoTable = DataShapes["GenericElementDataShape"].CreateValues();
+                                            // iterate through the parentElements and take care of each one
+                                            for (let element of parentElements) {
+                                                let row = parseElement(element);
+                                                elementsInfoTable.AddRow(row);
+                                            }
+                                        
+                                            return elementsInfoTable;
+                                        }
+                                        
+                                        function parseElement(element) {
+                                            return {
+                                                WebId: element.WebId,
+                                                Id: element.Id,
+                                                Name: element.Name,
+                                                Description: element.Description,
+                                                Path: element.Path,
+                                                TemplateName: element.TemplateName,
+                                                HasChildren: element.HasChildren,
+                                                Attributes: getAttributes(element.WebId),
+                                                Subcomponents: getElements(element.WebId)
+                                            }
+                                        }
+                                        ]]>
+                                        </code>
+                                    </Row>
+                                </Rows>
+                            </ConfigurationTable>
+                        </ConfigurationTables>
+                    </ServiceImplementation>
+                    <ServiceImplementation
+                     description=""
+                     handlerName="Script"
+                     name="CreateThingModelFromElementsFlat">
+                        <ConfigurationTables>
+                            <ConfigurationTable
+                             description="Script"
+                             isMultiRow="false"
+                             name="Script"
+                             ordinal="0">
+                                <DataShape>
+                                    <FieldDefinitions>
+                                        <FieldDefinition
+                                         baseType="STRING"
+                                         description="code"
+                                         name="code"
+                                         ordinal="0"></FieldDefinition>
+                                    </FieldDefinitions>
+                                </DataShape>
+                                <Rows>
+                                    <Row>
+                                        <code>
+                                        <![CDATA[
+                                        "use strict";
+                                        var loggerPrefix = me.name + "::CreateThingsForModel:: ";
+                                        var validEntityName = /^[^a-zA-Z_]+|[^a-zA-Z_0-9]+/g;
+                                        var genericThingProperties = ["WebId", "Id", "Path", "StockNumber", "TemplateName", "HasChildren"];
+                                        var attributeTypeMapping = {
+                                            "EnumerationValue": "STRING",
+                                            "Single": "NUMBER",
+                                            "anyURI": "STRING"
+                                        };
+                                        processElements(dataModel);
+                                        /**
+                                         * Handles processing an array of dexpi objects
+                                         */
+                                        function processElements(components, parent) {
+                                            // interate through the data model
+                                            for (var _i = 0, _a = components.rows; _i < _a.length; _i++) {
+                                                var element = _a[_i];
+                                                var thingName = prefix + "-" + (element.Name ? element.Name : 'NoName') + "-" + element.WebId + "-Thing";
+                                                logger.info(loggerPrefix + "Creating thing for " + thingName);
+                                                try {
+                                                    // attempt to create the thing.
+                                                    Resources.EntityServices.CreateThing({
+                                                        description: "Auto generated " + element.Path,
+                                                        thingTemplateName: template,
+                                                        name: thingName,
+                                                        tags: tags
+                                                    });
+                                                    // add the generic shape to the thing
+                                                    Resources.EntityServices.AddShapeToThing({
+                                                        name: thingName,
+                                                        thingShapeName: "OsiPiWebThingShape"
+                                                    });
+                                                    Things[thingName].EnableThing();
+                                                    Things[thingName].RestartThing();
+                                                    // set the generic properties
+                                                    for (var _b = 0, genericThingProperties_1 = genericThingProperties; _b < genericThingProperties_1.length; _b++) {
+                                                        var prop = genericThingProperties_1[_b];
+                                                        if (element[prop]) {
+                                                            Things[thingName][prop] = element[prop];
+                                                        }
+                                                    }
+                                                    // recurse and also handle the subcomponents, if they exist
+                                                    if (element.Subcomponents && element.Subcomponents.rows.length > 0) {
+                                                        var subcomponents = element.Subcomponents;
+                                                        for (var _c = 0, _d = subcomponents.rows; _c < _d.length; _c++) {
+                                                            var subcomponent = _d[_c];
+                                                            if (subcomponent.Attributes) {
+                                                                // iterate through the Attribuites array, create and set properties
+                                                                for (var _e = 0, _f = subcomponent.Attributes.rows; _e < _f.length; _e++) {
+                                                                    var attr = _f[_e];
+                                                                    if (!attributeTypeMapping[attr.Type]) {
+                                                                        logger.error(loggerPrefix + ": Element " + element.WebId + " has an attribuite " + attr.Name + " with format " + attr.Type + " which was not found");
+                                                                        throw loggerPrefix + ": Element " + element.WebId + " has an attribuite " + attr.Name + " with format " + attr.Type + " which was not found";
+                                                                    }
+                                                                    var sanitizedName = (subcomponent.Name + "_" + attr.TagId + "_" + attr.Name).replace(validEntityName, "");
+                                                                    // skip properties that were sanitiez until empty
+                                                                    if (!attr.Name.replace(validEntityName, "")) {
+                                                                        continue;
+                                                                    }
+                                                                    Things[thingName].AddPropertyDefinition({
+                                                                        description: "WebId: " + attr.WebId + "; Description: " + attr.Description + "; Path: " + attr.Path,
+                                                                        type: attributeTypeMapping[attr.Type],
+                                                                        name: sanitizedName,
+                                                                        category: "GeneratedAttrs",
+                                                                        persistent: true
+                                                                    });
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                catch (ex) {
+                                                    Resources.EntityServices.DeleteThing({
+                                                        name: thingName
+                                                    });
+                                                    logger.error(loggerPrefix + ": Failed to create thing " + thingName + " because " + ex);
+                                                    throw ex;
+                                                }
+                                            }
+                                        }
+                                        var result = DataShapes["RootEntityList"].CreateValues();
+                                        ]]>
+                                        </code>
+                                    </Row>
+                                    <Row>
+                                        <code>
+                                        <![CDATA[
+                                        const loggerPrefix = me.name + "::CreateThingsForModel:: ";
+                                        const validEntityName = /^[^a-zA-Z_]+|[^a-zA-Z_0-9]+/g;
+                                        const genericThingProperties = ["WebId", "Id", "Path", "StockNumber", "TemplateName", "HasChildren"];
+                                        
+                                        const attributeTypeMapping = {
+                                            "EnumerationValue": "STRING",
+                                            "Single": "NUMBER",
+                                            "anyURI": "STRING"
+                                        }
+                                        processElements(dataModel);
+                                        
+                                        /**
+                                         * Handles processing an array of dexpi objects 
+                                         */
+                                        function processElements(components: twx.INFOTABLE<twx.ds.GenericElementDataShape>, parent?: string) {
+                                            // interate through the data model
+                                            for (let element of components.rows) {
+                                                let thingName = `${prefix}-${element.Name ? element.Name : 'NoName'}-${element.WebId}-Thing`;
+                                                logger.info(loggerPrefix + "Creating thing for " + thingName);
+                                                try {
+                                                    // attempt to create the thing.
+                                                    Resources.EntityServices.CreateThing({
+                                                        description: "Auto generated " + element.Path,
+                                                        thingTemplateName: template,
+                                                        name: thingName,
+                                                        tags: tags
+                                                    });
+                                                    // add the generic shape to the thing
+                                                    Resources.EntityServices.AddShapeToThing({
+                                                        name: thingName,
+                                                        thingShapeName: "OsiPiWebThingShape"
+                                                    });
+                                                    Things[thingName].EnableThing();
+                                                    Things[thingName].RestartThing();
+                                                    // set the generic properties
+                                                    for (let prop of genericThingProperties) {
+                                                        if (element[prop]) {
+                                                            Things[thingName][prop] = element[prop];
+                                                        }
+                                                    }
+                                                    // recurse and also handle the subcomponents, if they exist
+                                                    if (element.Subcomponents && element.Subcomponents.rows.length > 0) {
+                                                        let subcomponents = element.Subcomponents;
+                                                        for (let subcomponent of subcomponents.rows) {
+                                                            if (subcomponent.Attributes) {
+                                                                // iterate through the Attribuites array, create and set properties
+                                                                for (let attr of subcomponent.Attributes.rows) {
+                                                                    if (!attributeTypeMapping[attr.Type]) {
+                                                                        logger.error(`${loggerPrefix}: Element ${element.WebId} has an attribuite ${attr.Name} with format ${attr.Type} which was not found`);
+                                                                        throw `${loggerPrefix}: Element ${element.WebId} has an attribuite ${attr.Name} with format ${attr.Type} which was not found`;
+                                                                    }
+                                                                    let sanitizedName = `${subcomponent.Name}_${attr.TagId}_${attr.Name}`.replace(validEntityName, "");
+                                                                    // skip properties that were sanitiez until empty
+                                                                    if (!attr.Name.replace(validEntityName, "")) {
+                                                                        continue;
+                                                                    }
+                                                                    Things[thingName].AddPropertyDefinition({
+                                                                        description: `WebId: ${attr.WebId}; Description: ${attr.Description}; Path: ${attr.Path}`,
+                                                                        type: attributeTypeMapping[attr.Type],
+                                                                        name: sanitizedName,
+                                                                        category: "GeneratedAttrs",
+                                                                        persistent: true
+                                                                    });
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                        
+                                        
+                                        
+                                        
+                                                } catch (ex) {
+                                                    Resources.EntityServices.DeleteThing({
+                                                        name: thingName
+                                                    });
+                                                    logger.error(`${loggerPrefix}: Failed to create thing ${thingName} because ${ex}`);
+                                                    throw ex;
+                                                }
+                                            }
+                                        }
+                                        let result = DataShapes["RootEntityList"].CreateValues();
+                                        ]]>
+                                        </code>
+                                    </Row>
+                                </Rows>
+                            </ConfigurationTable>
+                        </ConfigurationTables>
+                    </ServiceImplementation>
+                    <ServiceImplementation
+                     description=""
+                     handlerName="Script"
+                     name="CreateThingModelFromElementsNested">
+                        <ConfigurationTables>
+                            <ConfigurationTable
+                             description="Script"
+                             isMultiRow="false"
+                             name="Script"
+                             ordinal="0">
+                                <DataShape>
+                                    <FieldDefinitions>
+                                        <FieldDefinition
+                                         baseType="STRING"
+                                         description="code"
+                                         name="code"
+                                         ordinal="0"></FieldDefinition>
+                                    </FieldDefinitions>
+                                </DataShape>
+                                <Rows>
+                                    <Row>
+                                        <code>
+                                        <![CDATA[
+                                        "use strict";
+                                        var loggerPrefix = me.name + "::CreateThingsForModel:: ";
+                                        var validEntityName = /^[^a-zA-Z_]+|[^a-zA-Z_0-9]+/g;
+                                        var genericThingProperties = ["WebId", "Id", "Path", "StockNumber", "TemplateName", "HasChildren"];
+                                        var attributeTypeMapping = {
+                                            "EnumerationValue": "STRING",
+                                            "Single": "NUMBER",
+                                            "anyURI": "STRING"
+                                        };
+                                        processElements(dataModel);
+                                        var networkName = prefix + "-" + network + "Network";
+                                        // create the network where are going to be be storing the tree of dexpi file
+                                        Resources.EntityServices.CreateNetwork({
+                                            description: "Network for model file",
+                                            name: networkName,
+                                            tags: tags
+                                        });
+                                        /**
+                                         * Handles processing an array of dexpi objects
+                                         */
+                                        function processElements(components, parent) {
+                                            // interate through the data model
+                                            for (var _i = 0, _a = components.rows; _i < _a.length; _i++) {
+                                                var element = _a[_i];
+                                                var thingName = prefix + "-" + (element.Name ? element.Name : 'NoName') + "-" + element.WebId + "-Thing";
+                                                logger.info(loggerPrefix + "Creating thing for " + thingName);
+                                                try {
+                                                    // attempt to create the thing.
+                                                    Resources.EntityServices.CreateThing({
+                                                        description: "Auto generated " + element.Path,
+                                                        thingTemplateName: template,
+                                                        name: thingName,
+                                                        tags: tags
+                                                    });
+                                                    // add the generic shape to the thing
+                                                    Resources.EntityServices.AddShapeToThing({
+                                                        name: thingName,
+                                                        thingShapeName: "OsiPiWebThingShape"
+                                                    });
+                                                    Things[thingName].EnableThing();
+                                                    Things[thingName].RestartThing();
+                                                    // set the generic properties
+                                                    for (var _b = 0, genericThingProperties_1 = genericThingProperties; _b < genericThingProperties_1.length; _b++) {
+                                                        var prop = genericThingProperties_1[_b];
+                                                        if (element[prop]) {
+                                                            Things[thingName][prop] = element[prop];
+                                                        }
+                                                    }
+                                                    if (element.Attributes) {
+                                                        // iterate through the Attribuites array, create and set properties
+                                                        for (var _c = 0, _d = element.Attributes.rows; _c < _d.length; _c++) {
+                                                            var attr = _d[_c];
+                                                            if (!attributeTypeMapping[attr.Type]) {
+                                                                logger.error(loggerPrefix + ": Element " + element.WebId + " has an attribuite " + attr.Name + " with format " + attr.Type + " which was not found");
+                                                                throw loggerPrefix + ": Element " + element.WebId + " has an attribuite " + attr.Name + " with format " + attr.Type + " which was not found";
+                                                            }
+                                                            var sanitizedName = (attr.Name).replace(validEntityName, "");
+                                                            // skip properties that were sanitiez until empty
+                                                            if (!attr.Name.replace(validEntityName, "")) {
+                                                                continue;
+                                                            }
+                                                            Things[thingName].AddPropertyDefinition({
+                                                                description: "WebId: " + attr.WebId + "; Description: " + attr.Description + "; Path: " + attr.Path,
+                                                                type: attributeTypeMapping[attr.Type],
+                                                                name: sanitizedName,
+                                                                category: "GeneratedAttrs",
+                                                                persistent: true
+                                                            });
+                                                        }
+                                                    }
+                                                    Networks[networkName].AddConnection({
+                                                        from: parent,
+                                                        to: thingName,
+                                                        connectionType: "child"
+                                                    });
+                                                    // recurse and also handle the subcomponents, if they exist
+                                                    if (element.Subcomponents && element.Subcomponents.rows.length > 0) {
+                                                        processElements(element.Subcomponents, thingName);
+                                                    }
+                                                }
+                                                catch (ex) {
+                                                    Resources.EntityServices.DeleteThing({
+                                                        name: thingName
+                                                    });
+                                                    logger.error(loggerPrefix + ": Failed to create thing " + thingName + " because " + ex);
+                                                    throw ex;
+                                                }
+                                            }
+                                        }
+                                        var result = DataShapes["RootEntityList"].CreateValues();
+                                        ]]>
+                                        </code>
+                                    </Row>
+                                    <Row>
+                                        <code>
+                                        <![CDATA[
+                                        const loggerPrefix = me.name + "::CreateThingsForModel:: ";
+                                        const validEntityName = /^[^a-zA-Z_]+|[^a-zA-Z_0-9]+/g;
+                                        const genericThingProperties = ["WebId", "Id", "Path", "StockNumber", "TemplateName", "HasChildren"];
+                                        
+                                        const attributeTypeMapping = {
+                                            "EnumerationValue": "STRING",
+                                            "Single": "NUMBER",
+                                            "anyURI": "STRING"
+                                        }
+                                        processElements(dataModel);
+                                        
+                                        const networkName = `${prefix}-${network}Network`;
+                                        // create the network where are going to be be storing the tree of dexpi file
+                                        Resources.EntityServices.CreateNetwork({
+                                            description: `Network for model file`,
+                                            name: networkName,
+                                            tags: tags
+                                        }); 
+                                        /**
+                                         * Handles processing an array of dexpi objects 
+                                         */
+                                        function processElements(components: twx.INFOTABLE<twx.ds.GenericElementDataShape>, parent?: string) {
+                                            // interate through the data model
+                                            for (let element of components.rows) {
+                                                let thingName = `${prefix}-${element.Name ? element.Name : 'NoName'}-${element.WebId}-Thing`;
+                                                logger.info(loggerPrefix + "Creating thing for " + thingName);
+                                                try {
+                                                    // attempt to create the thing.
+                                                    Resources.EntityServices.CreateThing({
+                                                        description: "Auto generated " + element.Path,
+                                                        thingTemplateName: template,
+                                                        name: thingName,
+                                                        tags: tags
+                                                    });
+                                                    // add the generic shape to the thing
+                                                    Resources.EntityServices.AddShapeToThing({
+                                                        name: thingName,
+                                                        thingShapeName: "OsiPiWebThingShape"
+                                                    });
+                                                    Things[thingName].EnableThing();
+                                                    Things[thingName].RestartThing();
+                                                    // set the generic properties
+                                                    for (let prop of genericThingProperties) {
+                                                        if (element[prop]) {
+                                                            Things[thingName][prop] = element[prop];
+                                                        }
+                                                    }
+                                                    if (element.Attributes) {
+                                                        // iterate through the Attribuites array, create and set properties
+                                                        for (let attr of element.Attributes.rows) {
+                                                            if (!attributeTypeMapping[attr.Type]) {
+                                                                logger.error(`${loggerPrefix}: Element ${element.WebId} has an attribuite ${attr.Name} with format ${attr.Type} which was not found`);
+                                                                throw `${loggerPrefix}: Element ${element.WebId} has an attribuite ${attr.Name} with format ${attr.Type} which was not found`;
+                                                            }
+                                                            let sanitizedName = (attr.Name).replace(validEntityName, "");
+                                                            // skip properties that were sanitiez until empty
+                                                            if (!attr.Name.replace(validEntityName, "")) {
+                                                                continue;
+                                                            }
+                                                            Things[thingName].AddPropertyDefinition({
+                                                                description: `WebId: ${attr.WebId}; Description: ${attr.Description}; Path: ${attr.Path}`,
+                                                                type: attributeTypeMapping[attr.Type],
+                                                                name: sanitizedName,
+                                                                category: "GeneratedAttrs",
+                                                                persistent: true
+                                                            });
+                                                                            }
+                                                    }
+                                                    Networks[networkName].AddConnection({
+                                                        from: parent,
+                                                        to: thingName,
+                                                        connectionType: "child"
+                                                    })
+                                                    // recurse and also handle the subcomponents, if they exist
+                                                    if (element.Subcomponents && element.Subcomponents.rows.length > 0) {
+                                                        processElements(element.Subcomponents, thingName);
+                                                    }
+                                        
+                                        
+                                                } catch (ex) {
+                                                    Resources.EntityServices.DeleteThing({
+                                                        name: thingName
+                                                    });
+                                                    logger.error(`${loggerPrefix}: Failed to create thing ${thingName} because ${ex}`);
+                                                    throw ex;
+                                                }
+                                            }
+                                        }
+                                        let result = DataShapes["RootEntityList"].CreateValues();
+                                        ]]>
+                                        </code>
+                                    </Row>
+                                </Rows>
+                            </ConfigurationTable>
+                        </ConfigurationTables>
+                    </ServiceImplementation>
+                    <ServiceImplementation
+                     description=""
+                     handlerName="Script"
+                     name="CreateThingModelFromElementWebId">
+                        <ConfigurationTables>
+                            <ConfigurationTable
+                             description="Script"
+                             isMultiRow="false"
+                             name="Script"
+                             ordinal="0">
+                                <DataShape>
+                                    <FieldDefinitions>
+                                        <FieldDefinition
+                                         baseType="STRING"
+                                         description="code"
+                                         name="code"
+                                         ordinal="0"></FieldDefinition>
+                                    </FieldDefinitions>
+                                </DataShape>
+                                <Rows>
+                                    <Row>
+                                        <code>
+                                        <![CDATA[
+                                        "use strict";
+                                        var data = me.CreateModelFromPiWeb({
+                                            elementWebId: elementWebId,
+                                            connectorThingName: connectorThingName
+                                        });
+                                        me.CreateThingModelFromElementsFlat({
+                                            template: template,
+                                            dataModel: data,
+                                            prefix: prefix,
+                                            tags: tags,
+                                            network: network
+                                        });
+                                        ]]>
+                                        </code>
+                                    </Row>
+                                    <Row>
+                                        <code>
+                                        <![CDATA[
+                                        let data = me.CreateModelFromPiWeb({
+                                            elementWebId: elementWebId,
+                                            connectorThingName: connectorThingName
+                                        });
+                                        
+                                        me.CreateThingModelFromElementsFlat({
+                                            template: template,
+                                            dataModel: data,
+                                            prefix: prefix,
+                                            tags: tags,
+                                            network: network
+                                        })
+                                        ]]>
+                                        </code>
+                                    </Row>
+                                </Rows>
+                            </ConfigurationTable>
+                        </ConfigurationTables>
+                    </ServiceImplementation>
+                </ServiceImplementations>
+                <Subscriptions></Subscriptions>
+            </ThingShape>
+            <PropertyBindings></PropertyBindings>
+            <RemotePropertyBindings></RemotePropertyBindings>
+            <RemoteServiceBindings></RemoteServiceBindings>
+            <RemoteEventBindings></RemoteEventBindings>
+            <AlertConfigurations></AlertConfigurations>
+            <ImplementedShapes></ImplementedShapes>
+            <ThingProperties></ThingProperties>
+        </Thing>
+    </Things>
+</Entities>

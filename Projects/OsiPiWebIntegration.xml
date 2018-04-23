@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Entities
+ build="b190"
+ majorVersion="8"
+ minorVersion="2"
+ modelPersistenceProviderPackage="H2PersistenceProviderPackage"
+ revision="3"
+ schemaVersion="1020"
+ universal="">
+    <Projects>
+        <Project
+         dependsOn=""
+         description=""
+         documentationContent=""
+         homeMashup=""
+         lastModifiedDate="2018-04-18T15:42:57.640+03:00"
+         name="OsiPiWebIntegration"
+         packageVersion="1.0.0"
+         projectName="OsiPiWebIntegration"
+         tags="">
+            <avatar></avatar>
+            <DesignTimePermissions>
+                <Create></Create>
+                <Read></Read>
+                <Update></Update>
+                <Delete></Delete>
+                <Metadata></Metadata>
+            </DesignTimePermissions>
+            <RunTimePermissions></RunTimePermissions>
+            <VisibilityPermissions>
+                <Visibility></Visibility>
+            </VisibilityPermissions>
+            <ConfigurationTables></ConfigurationTables>
+        </Project>
+    </Projects>
+</Entities>
