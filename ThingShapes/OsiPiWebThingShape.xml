@@ -13,7 +13,7 @@
          description=""
          documentationContent=""
          homeMashup=""
-         lastModifiedDate="2018-04-20T17:25:33.696+03:00"
+         lastModifiedDate="2018-05-09T10:36:47.632+03:00"
          name="OsiPiWebThingShape"
          projectName="OsiPiWebIntegration"
          tags="">
@@ -152,7 +152,8 @@
                                         }
                                         propertyNameMap[propertyDescMatch[1]] = {
                                             name: propertyDef.name,
-                                            baseType: propertyDef.baseType
+                                            baseType: propertyDef.baseType,
+                                            updated: false
                                         };
                                     }
                                     var connectorThing = Things[me.connectorThing];
@@ -169,19 +170,9 @@
                                             if (!propertyNameMap[propValue["WebId"]]) {
                                                 continue;
                                             }
-                                            var rawPropValue = void 0;
-                                            if (propertyNameMap[propValue["WebId"]].baseType == "STRING") {
-                                                rawPropValue = propValue.Value.Value.Name;
-                                            }
-                                            else if (propertyNameMap[propValue["WebId"]].baseType == "NUMBER") {
-                                                if (typeof (propValue.Value.Value) == "number") {
-                                                    rawPropValue = propValue.Value.Value;
-                                                }
-                                                else {
-                                                    rawPropValue = propValue.Value.Value.Value;
-                                                }
-                                            }
+                                            var rawPropValue = getPropValueFromResponse(propValue.Value, propertyNameMap[propValue["WebId"]].baseType);
                                             var quality = propValue.Value.Good ? "GOOD" : "BAD";
+                                            propertyNameMap[propValue["WebId"]].updated = true;
                                             updatedPropertyRequest.AddRow({
                                                 name: propertyNameMap[propValue["WebId"]].name,
                                                 value: rawPropValue,
@@ -189,10 +180,35 @@
                                             });
                                         }
                                     }
+                                    // now interate through the properties that we missed and uptate those as well
+                                    Object.keys(propertyNameMap).forEach(function (prop) {
+                                        if (!propertyNameMap[prop].updated) {
+                                            // manually go in and update this prop
+                                            var propValue = connectorThing.GetValue({ webId: prop, objType: "streams" });
+                                            updatedPropertyRequest.AddRow({
+                                                name: propertyNameMap[prop].name,
+                                                value: propValue.Value,
+                                                time: propValue.Timestamp
+                                            });
+                                        }
+                                    });
                                     me.UpdatePropertyValues({
                                         values: updatedPropertyRequest
                                     });
                                     var result = updatedPropertyRequest;
+                                    function getPropValueFromResponse(response, basetype) {
+                                        if (basetype == "STRING") {
+                                            return response.Value.Name;
+                                        }
+                                        else if (basetype == "NUMBER") {
+                                            if (typeof (response.Value) == "number") {
+                                                return response.Value;
+                                            }
+                                            else {
+                                                return response.Value.Value;
+                                            }
+                                        }
+                                    }
                                     ]]>
                                     </code>
                                 </Row>
@@ -205,7 +221,8 @@
                                     let propertyNameMap: {
                                         [s: string]: {
                                             name: string,
-                                            baseType: string
+                                            baseType: string,
+                                            updated: boolean
                                         }
                                     } = {};
                                     
@@ -220,7 +237,8 @@
                                         }
                                         propertyNameMap[propertyDescMatch[1]] = {
                                             name: propertyDef.name,
-                                            baseType: propertyDef.baseType
+                                            baseType: propertyDef.baseType,
+                                            updated: false
                                         }
                                     }
                                     
@@ -239,17 +257,10 @@
                                             if (!propertyNameMap[propValue["WebId"]]) {
                                                 continue;
                                             }
-                                            let rawPropValue;
-                                            if (propertyNameMap[propValue["WebId"]].baseType == "STRING") {
-                                                rawPropValue = propValue.Value.Value.Name;
-                                            } else if (propertyNameMap[propValue["WebId"]].baseType == "NUMBER") {
-                                                if(typeof(propValue.Value.Value)=="number") {
-                                                    rawPropValue = propValue.Value.Value;
-                                                } else {
-                                                    rawPropValue = propValue.Value.Value.Value;
-                                                }
-                                            }
+                                            let rawPropValue = getPropValueFromResponse(propValue.Value, propertyNameMap[propValue["WebId"]].baseType);
+                                            
                                             let quality = propValue.Value.Good ? "GOOD" : "BAD";
+                                            propertyNameMap[propValue["WebId"]].updated = true;
                                             updatedPropertyRequest.AddRow({
                                                 name: propertyNameMap[propValue["WebId"]].name,
                                                 value: rawPropValue,
@@ -258,10 +269,35 @@
                                         }
                                     }
                                     
+                                    // now interate through the properties that we missed and uptate those as well
+                                    Object.keys(propertyNameMap).forEach((prop)=> {
+                                        if(!propertyNameMap[prop].updated) {
+                                            // manually go in and update this prop
+                                            let propValue = connectorThing.GetValue({ webId: prop, objType: "streams" });
+                                            updatedPropertyRequest.AddRow({
+                                                name: propertyNameMap[prop].name,
+                                                value: propValue.Value,
+                                                time: propValue.Timestamp
+                                            });
+                                        }
+                                    });
+                                    
                                     me.UpdatePropertyValues({
                                         values: updatedPropertyRequest
                                     })
                                     var result = updatedPropertyRequest;
+                                    
+                                    function getPropValueFromResponse(response, basetype) {
+                                        if (basetype == "STRING") {
+                                           return response.Value.Name;
+                                        } else if (basetype == "NUMBER") {
+                                            if (typeof (response.Value) == "number") {
+                                                return response.Value;
+                                            } else {
+                                                return response.Value.Value;
+                                            }
+                                        }
+                                    }
                                     ]]>
                                     </code>
                                 </Row>

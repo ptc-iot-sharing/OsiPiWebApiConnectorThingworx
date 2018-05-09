@@ -15,7 +15,7 @@
          enabled="true"
          homeMashup=""
          identifier=""
-         lastModifiedDate="2018-04-20T17:37:39.695+03:00"
+         lastModifiedDate="2018-05-09T10:36:33.831+03:00"
          name="OsiPiWebTransformerThing"
          projectName="OsiPiWebIntegration"
          published="false"
@@ -82,6 +82,12 @@
                          name="result"
                          ordinal="0"></ResultType>
                         <ParameterDefinitions>
+                            <FieldDefinition
+                             aspect.thingTemplate="OsiPiWebConnectorThingTemplate"
+                             baseType="THINGNAME"
+                             description=""
+                             name="connectorThingName"
+                             ordinal="6"></FieldDefinition>
                             <FieldDefinition
                              aspect.dataShape="GenericElementDataShape"
                              baseType="INFOTABLE"
@@ -259,6 +265,17 @@
                                                     if (attrAttr.Name == "TagId") {
                                                         // now get the tagId 
                                                         attrTagId = connectorThing.GetValue({ webId: attrAttr.WebId, objType: "attributes" }).Value;
+                                                        break;
+                                                    }
+                                                }
+                                                // now iterate through the rest of the attributes and add them
+                                                for (var _c = 0, _d = atrributeAttributes.Items; _c < _d.length; _c++) {
+                                                    var attrAttr = _d[_c];
+                                                    if (attrAttr.Name != "TagId") {
+                                                        attrAttr.TagId = attrTagId;
+                                                        attrAttr.ParentAttributeName = attr.Name;
+                                                        // also add this attr to the infotable
+                                                        attrsInfotable.AddRow(attrAttr);
                                                     }
                                                 }
                                                 attr.TagId = attrTagId;
@@ -297,12 +314,12 @@
                                         <![CDATA[
                                         const loggerPrefix = me.name + "::CreateModelFromPiWeb:: ";
                                         
-                                        let connectorThing = Things[connectorThingName]; 
+                                        let connectorThing = Things[connectorThingName];
                                         
                                         let result = getElements(elementWebId);
                                         
                                         function getElements(webId): twx.ds.GenericElementDataShape {
-                                            logger.info(loggerPrefix + ` Getting elements for ${webId}` );
+                                            logger.info(loggerPrefix + ` Getting elements for ${webId}`);
                                             let elements = connectorThing.GetElements({ webId: webId });
                                         
                                             return parseElements(elements.Items);
@@ -320,13 +337,23 @@
                                             let attrsInfotable = DataShapes.GenericAttributeDataShape.CreateValues();
                                             for (let attr of attributes) {
                                                 // try to find the tagId for this attr
-                                                let atrributeAttributes = connectorThing.GetAttributes({ webId: attr.WebId, objType: "attributes"});
+                                                let atrributeAttributes = connectorThing.GetAttributes({ webId: attr.WebId, objType: "attributes" });
                                                 let attrTagId = "";
                                                 // find the attribute that has the name tagId
                                                 for (let attrAttr of atrributeAttributes.Items) {
-                                                    if(attrAttr.Name == "TagId") {
+                                                    if (attrAttr.Name == "TagId") {
                                                         // now get the tagId 
-                                                        attrTagId = connectorThing.GetValue({webId: attrAttr.WebId, objType: "attributes"}).Value;
+                                                        attrTagId = connectorThing.GetValue({ webId: attrAttr.WebId, objType: "attributes" }).Value;
+                                                        break;
+                                                    }
+                                                }
+                                                // now iterate through the rest of the attributes and add them
+                                                for (let attrAttr of atrributeAttributes.Items) {
+                                                    if (attrAttr.Name != "TagId") {
+                                                        attrAttr.TagId = attrTagId;
+                                                        attrAttr.ParentAttributeName = attr.Name;
+                                                        // also add this attr to the infotable
+                                                        attrsInfotable.AddRow(attrAttr);
                                                     }
                                                 }
                                                 attr.TagId = attrTagId;
@@ -406,7 +433,7 @@
                                             // interate through the data model
                                             for (var _i = 0, _a = components.rows; _i < _a.length; _i++) {
                                                 var element = _a[_i];
-                                                var thingName = prefix + "-" + (element.Name ? element.Name : 'NoName') + "-" + element.WebId + "-Thing";
+                                                var thingName = prefix + "-" + (element.Name ? element.Name : 'NoName') + "-Thing";
                                                 logger.info(loggerPrefix + "Creating thing for " + thingName);
                                                 try {
                                                     // attempt to create the thing.
@@ -430,34 +457,11 @@
                                                             Things[thingName][prop] = element[prop];
                                                         }
                                                     }
+                                                    Things[thingName].connectorThing = connectorThingName;
                                                     // recurse and also handle the subcomponents, if they exist
                                                     if (element.Subcomponents && element.Subcomponents.rows.length > 0) {
                                                         var subcomponents = element.Subcomponents;
-                                                        for (var _c = 0, _d = subcomponents.rows; _c < _d.length; _c++) {
-                                                            var subcomponent = _d[_c];
-                                                            if (subcomponent.Attributes) {
-                                                                // iterate through the Attribuites array, create and set properties
-                                                                for (var _e = 0, _f = subcomponent.Attributes.rows; _e < _f.length; _e++) {
-                                                                    var attr = _f[_e];
-                                                                    if (!attributeTypeMapping[attr.Type]) {
-                                                                        logger.error(loggerPrefix + ": Element " + element.WebId + " has an attribuite " + attr.Name + " with format " + attr.Type + " which was not found");
-                                                                        throw loggerPrefix + ": Element " + element.WebId + " has an attribuite " + attr.Name + " with format " + attr.Type + " which was not found";
-                                                                    }
-                                                                    var sanitizedName = (subcomponent.Name + "_" + attr.TagId + "_" + attr.Name).replace(validEntityName, "");
-                                                                    // skip properties that were sanitiez until empty
-                                                                    if (!attr.Name.replace(validEntityName, "")) {
-                                                                        continue;
-                                                                    }
-                                                                    Things[thingName].AddPropertyDefinition({
-                                                                        description: "WebId: " + attr.WebId + "; Description: " + attr.Description + "; Path: " + attr.Path,
-                                                                        type: attributeTypeMapping[attr.Type],
-                                                                        name: sanitizedName,
-                                                                        category: "GeneratedAttrs",
-                                                                        persistent: true
-                                                                    });
-                                                                }
-                                                            }
-                                                        }
+                                                        createPropertiesFromSubcomponentAttrs(subcomponents, element, thingName);
                                                     }
                                                 }
                                                 catch (ex) {
@@ -470,6 +474,39 @@
                                             }
                                         }
                                         var result = DataShapes["RootEntityList"].CreateValues();
+                                        function createPropertiesFromSubcomponentAttrs(subcomponents, element, thingName) {
+                                            for (var _i = 0, _a = subcomponents.rows; _i < _a.length; _i++) {
+                                                var subcomponent = _a[_i];
+                                                if (subcomponent.Attributes) {
+                                                    // iterate through the Attribuites array, create and set properties
+                                                    for (var _b = 0, _c = subcomponent.Attributes.rows; _b < _c.length; _b++) {
+                                                        var attr = _c[_b];
+                                                        if (!attributeTypeMapping[attr.Type]) {
+                                                            logger.error(loggerPrefix + ": Element " + element.WebId + " has an attribuite " + attr.Name + " with format " + attr.Type + " which was not found");
+                                                            throw loggerPrefix + ": Element " + element.WebId + " has an attribuite " + attr.Name + " with format " + attr.Type + " which was not found";
+                                                        }
+                                                        if (attr.ParentAttributeName) {
+                                                            attr.Name = attr.ParentAttributeName + "_" + attr.Name;
+                                                        }
+                                                        var sanitizedName = (subcomponent.Name + "_" + attr.TagId + "_" + attr.Name).replace(validEntityName, "");
+                                                        // skip properties that were sanitiez until empty
+                                                        if (!attr.Name.replace(validEntityName, "")) {
+                                                            continue;
+                                                        }
+                                                        Things[thingName].AddPropertyDefinition({
+                                                            description: "WebId: " + attr.WebId + "; Description: " + attr.Description + "; Path: " + attr.Path,
+                                                            type: attributeTypeMapping[attr.Type],
+                                                            name: sanitizedName,
+                                                            category: "GeneratedAttrs",
+                                                            persistent: true
+                                                        });
+                                                    }
+                                                }
+                                                if (subcomponent.Subcomponents) {
+                                                    createPropertiesFromSubcomponentAttrs(subcomponent.Subcomponents, subcomponent, thingName);
+                                                }
+                                            }
+                                        }
                                         ]]>
                                         </code>
                                     </Row>
@@ -493,7 +530,7 @@
                                         function processElements(components: twx.INFOTABLE<twx.ds.GenericElementDataShape>, parent?: string) {
                                             // interate through the data model
                                             for (let element of components.rows) {
-                                                let thingName = `${prefix}-${element.Name ? element.Name : 'NoName'}-${element.WebId}-Thing`;
+                                                let thingName = `${prefix}-${element.Name ? element.Name : 'NoName'}-Thing`;
                                                 logger.info(loggerPrefix + "Creating thing for " + thingName);
                                                 try {
                                                     // attempt to create the thing.
@@ -516,32 +553,12 @@
                                                             Things[thingName][prop] = element[prop];
                                                         }
                                                     }
+                                                    Things[thingName].connectorThing = connectorThingName;
+                                                    
                                                     // recurse and also handle the subcomponents, if they exist
                                                     if (element.Subcomponents && element.Subcomponents.rows.length > 0) {
                                                         let subcomponents = element.Subcomponents;
-                                                        for (let subcomponent of subcomponents.rows) {
-                                                            if (subcomponent.Attributes) {
-                                                                // iterate through the Attribuites array, create and set properties
-                                                                for (let attr of subcomponent.Attributes.rows) {
-                                                                    if (!attributeTypeMapping[attr.Type]) {
-                                                                        logger.error(`${loggerPrefix}: Element ${element.WebId} has an attribuite ${attr.Name} with format ${attr.Type} which was not found`);
-                                                                        throw `${loggerPrefix}: Element ${element.WebId} has an attribuite ${attr.Name} with format ${attr.Type} which was not found`;
-                                                                    }
-                                                                    let sanitizedName = `${subcomponent.Name}_${attr.TagId}_${attr.Name}`.replace(validEntityName, "");
-                                                                    // skip properties that were sanitiez until empty
-                                                                    if (!attr.Name.replace(validEntityName, "")) {
-                                                                        continue;
-                                                                    }
-                                                                    Things[thingName].AddPropertyDefinition({
-                                                                        description: `WebId: ${attr.WebId}; Description: ${attr.Description}; Path: ${attr.Path}`,
-                                                                        type: attributeTypeMapping[attr.Type],
-                                                                        name: sanitizedName,
-                                                                        category: "GeneratedAttrs",
-                                                                        persistent: true
-                                                                    });
-                                                                }
-                                                            }
-                                                        }
+                                                        createPropertiesFromSubcomponentAttrs(subcomponents, element, thingName);
                                                     }
                                         
                                         
@@ -557,6 +574,38 @@
                                             }
                                         }
                                         let result = DataShapes["RootEntityList"].CreateValues();
+                                        
+                                        function createPropertiesFromSubcomponentAttrs(subcomponents, element, thingName) {
+                                            for (let subcomponent of subcomponents.rows) {
+                                                if (subcomponent.Attributes) {
+                                                    // iterate through the Attribuites array, create and set properties
+                                                    for (let attr of subcomponent.Attributes.rows) {
+                                                        if (!attributeTypeMapping[attr.Type]) {
+                                                            logger.error(`${loggerPrefix}: Element ${element.WebId} has an attribuite ${attr.Name} with format ${attr.Type} which was not found`);
+                                                            throw `${loggerPrefix}: Element ${element.WebId} has an attribuite ${attr.Name} with format ${attr.Type} which was not found`;
+                                                        }
+                                                        if (attr.ParentAttributeName) {
+                                                            attr.Name = `${attr.ParentAttributeName}_${attr.Name}`;
+                                                        }
+                                                        let sanitizedName = `${subcomponent.Name}_${attr.TagId}_${attr.Name}`.replace(validEntityName, "");
+                                                        // skip properties that were sanitiez until empty
+                                                        if (!attr.Name.replace(validEntityName, "")) {
+                                                            continue;
+                                                        }
+                                                        Things[thingName].AddPropertyDefinition({
+                                                            description: `WebId: ${attr.WebId}; Description: ${attr.Description}; Path: ${attr.Path}`,
+                                                            type: attributeTypeMapping[attr.Type],
+                                                            name: sanitizedName,
+                                                            category: "GeneratedAttrs",
+                                                            persistent: true
+                                                        });
+                                                    }
+                                                }
+                                                if (subcomponent.Subcomponents) {
+                                                    createPropertiesFromSubcomponentAttrs(subcomponent.Subcomponents, subcomponent, thingName);
+                                                }
+                                            }
+                                        }
                                         ]]>
                                         </code>
                                     </Row>
@@ -812,7 +861,8 @@
                                             dataModel: data,
                                             prefix: prefix,
                                             tags: tags,
-                                            network: network
+                                            network: network,
+                                            connectorThingName: connectorThingName
                                         });
                                         ]]>
                                         </code>
@@ -830,7 +880,8 @@
                                             dataModel: data,
                                             prefix: prefix,
                                             tags: tags,
-                                            network: network
+                                            network: network,
+                                            connectorThingName: connectorThingName
                                         })
                                         ]]>
                                         </code>
