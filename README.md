@@ -20,3 +20,5 @@ In thingworx, the following functionality is available:
     * The generated property descriptions contains essential information about the property, linking it to OsiPi. It cannot be manually modified.
 * `OsiPiWebThingShape`: ThingShape that marks all the OSIPi exported elements. A service is availalbe on each allowing the automatic property updates
 * `OsiPiUpdaterScheduler`: Automatically updates all properties of all things marked with the above thingshape.
+
+#This Extension is provided as-is and without warranty or support. It is not part of the PTC product suite. This project is licensed under the terms of the MIT license
